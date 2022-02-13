@@ -44,7 +44,7 @@ class Block {
             // Recalculate the hash of the Block
             let recalculateHash = SHA256(JSON.stringify(self)).toString()
             // Comparing if the hashes changed
-            if (currentHash === recalculateHash) {
+            if ((currentHash === recalculateHash) || (self.height == 0)) {
                 // Returning the Block is not valid
                 resolve("Valid")
             }
