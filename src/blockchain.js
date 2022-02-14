@@ -73,7 +73,12 @@ class Blockchain {
             else {
                 block.previousBlockHash = null
             }
-            resolve(self.chain.push(block))
+            if (self.chain.push(block)) {
+                resolve()
+            }
+            else{
+                reject(Error("Error on creating block"))
+            }
         });
     }
 
@@ -87,7 +92,7 @@ class Blockchain {
      */
     requestMessageOwnershipVerification(address) {
         return new Promise((resolve) => {
-            
+            resolve(`${address}:${new Date().getTime().toString().slice(0,-3)}:starRegistry`)
         });
     }
 
@@ -100,7 +105,7 @@ class Blockchain {
      * 1. Get the time from the message sent as a parameter example: `parseInt(message.split(':')[1])`
      * 2. Get the current time: `let currentTime = parseInt(new Date().getTime().toString().slice(0, -3));`
      * 3. Check if the time elapsed is less than 5 minutes
-     * 4. Veify the message with wallet address and signature: `bitcoinMessage.verify(message, address, signature)`
+     * 4. Verify the message with wallet address and signature: `bitcoinMessage.verify(message, address, signature)`
      * 5. Create the block and add it to the chain
      * 6. Resolve with the block added.
      * @param {*} address 
@@ -111,7 +116,20 @@ class Blockchain {
     submitStar(address, message, signature, star) {
         let self = this;
         return new Promise(async (resolve, reject) => {
-            
+            const timeSent = parseInt(message.split(':')[1])
+            const currentTime = parseInt(new Date().getTime().toString().slice(0, -3));
+            if ((currentTime - timeSent)/60 > 5){
+                console.log('dasdasdad')
+                reject(Error('More Than 5 min'))
+            }
+            if(bitcoinMessage.verify(message, address, signature)){
+                let newBlock = new BlockClass.Block({data: message});
+                await this._addBlock(newBlock);
+                resolve(newBlock)
+            }
+            else {
+                reject(Error('Message Verification Failed'))
+            }  
         });
     }
 
