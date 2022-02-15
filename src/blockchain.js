@@ -74,7 +74,7 @@ class Blockchain {
                 block.previousBlockHash = null
             }
             if (self.chain.push(block)) {
-                resolve()
+                resolve(block)
             }
             else{
                 reject(Error("Error on creating block"))
@@ -119,15 +119,17 @@ class Blockchain {
             const timeSent = parseInt(message.split(':')[1])
             const currentTime = parseInt(new Date().getTime().toString().slice(0, -3));
             if ((currentTime - timeSent)/60 > 5){
-                console.log('dasdasdad')
+                console.log('dasdasdsd')
                 reject(Error('More Than 5 min'))
             }
             if(bitcoinMessage.verify(message, address, signature)){
-                let newBlock = new BlockClass.Block({data: message});
-                await this._addBlock(newBlock);
+                let data = {address: address, message: message, signature: signature, star: star};
+                let newBlock = new BlockClass.Block(data);
+                await self._addBlock(newBlock);
                 resolve(newBlock)
             }
             else {
+                console.log('dasdasdsd')
                 reject(Error('Message Verification Failed'))
             }  
         });
@@ -142,7 +144,12 @@ class Blockchain {
     getBlockByHash(hash) {
         let self = this;
         return new Promise((resolve, reject) => {
-           
+           const blocksMatched = self.chain.filter(block => block.hash === hash);
+           if (blocksMatched) {
+               resolve(blocksMatched);
+           } else {
+               resolve(null);
+           }
         });
     }
 
@@ -173,7 +180,17 @@ class Blockchain {
         let self = this;
         let stars = [];
         return new Promise((resolve, reject) => {
-            
+            self.chain.forEach(async (block, idx) => {
+                let bodyDecoded = await block.getBData()
+                if (bodyDecoded.address === address) {
+                    stars.push(bodyDecoded)
+                }
+            });
+            if (stars) {
+                resolve(stars)
+            } else {
+                resolve(null)
+            }
         });
     }
 

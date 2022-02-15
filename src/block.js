@@ -75,9 +75,10 @@ class Block {
             if (this.height) {
                 resolve(decodedData)
             }
-            else {
-                reject(Error("Genesis Block"))
-            }
+            // else {
+            //     resolve()
+            //     // reject(Error("Genesis Block"))
+            // }
         })
     }
 
