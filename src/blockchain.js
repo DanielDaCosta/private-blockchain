@@ -66,13 +66,13 @@ class Blockchain {
         return new Promise(async (resolve, reject) => {
             block.time = new Date().getTime().toString().slice(0, -3)
             block.height = self.chain.length
-            block.hash = SHA256(JSON.stringify(block)).toString()
             if (self.chain.length > 0){
                 block.previousBlockHash = self.chain[self.chain.length - 1].hash
             }
             else {
                 block.previousBlockHash = null
             }
+            block.hash = SHA256(JSON.stringify(block)).toString()
             if (self.chain.push(block)) {
                 resolve(block)
             }
@@ -119,7 +119,7 @@ class Blockchain {
             const timeSent = parseInt(message.split(':')[1])
             const currentTime = parseInt(new Date().getTime().toString().slice(0, -3));
             if ((currentTime - timeSent)/60 > 5){
-                console.log('dasdasdsd')
+                // console.log('dasdasdsd')
                 reject(Error('More Than 5 min'))
             }
             if(bitcoinMessage.verify(message, address, signature)){
@@ -129,7 +129,7 @@ class Blockchain {
                 resolve(newBlock)
             }
             else {
-                console.log('dasdasdsd')
+                // console.log('dasdasdsd')
                 reject(Error('Message Verification Failed'))
             }  
         });
@@ -204,7 +204,22 @@ class Blockchain {
         let self = this;
         let errorLog = [];
         return new Promise(async (resolve, reject) => {
-            
+            self.chain.forEach(async (block, idx) => {
+                let validationBlock = await block.validate()
+                if (idx < self.chain.length - 1) {
+                    if (block.hash !== self.chain[idx + 1].previousBlockHash) {
+                        errorLog.push(new Error(`Invalid link between Block #${block.height} not linked to the hash of block #${self.chain[idx + 1].height}.`))
+                    }
+                }
+                if(!validationBlock) {
+                    errorLog.push(new Error(`Invalid block #${block.height}`))
+                }
+            })
+            if (errorLog.length){
+                resolve(errorLog)
+            } else {
+                resolve("No errors detected")
+            }
         });
     }
 
