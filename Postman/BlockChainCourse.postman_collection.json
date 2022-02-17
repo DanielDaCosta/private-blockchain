@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "b5ab7c80-1c89-45fe-ace9-85f76660aee8",
+		"name": "BlockChainCourse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "requestValidation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/requestValidation",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"requestValidation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submitstart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ\",\r\n    \"signature\": \"III4BgJ9lCWWPtJQrgbw7hHVb/BwmIkWR/ZCt4lYOZnlO1iZWPnUC/hk6iRsCh83bLQBcyY+9qtBH9y7Kt7niP4=\",\r\n    \"message\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ:1644801851:starRegistry\",\r\n    \"star\": {\r\n        \"dec\": \"68° 52' 56.9\",\r\n        \"ra\": \"16h 29m 1.0s\",\r\n        \"story\": \"Testing the story 4\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/submitstar",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"submitstar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getbyhash",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/block/hash/:hash",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"block",
+						"hash",
+						":hash"
+					],
+					"variable": [
+						{
+							"key": "hash",
+							"value": "6551979cccf4dd7aaacbc527421d167a8a106180c94aa2bb2eefcb7cffcfe480"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStarsByWalletAddress",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ\",\r\n    \"signature\": \"III4BgJ9lCWWPtJQrgbw7hHVb/BwmIkWR/ZCt4lYOZnlO1iZWPnUC/hk6iRsCh83bLQBcyY+9qtBH9y7Kt7niP4=\",\r\n    \"message\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ:1644801851:starRegistry\",\r\n    \"star\": {\r\n        \"dec\": \"68° 52' 56.9\",\r\n        \"ra\": \"16h 29m 1.0s\",\r\n        \"story\": \"Testing the story 4\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/blocks/:address",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blocks",
+						":address"
+					],
+					"variable": [
+						{
+							"key": "address",
+							"value": "mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validateChain",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"address\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ\",\r\n    \"signature\": \"III4BgJ9lCWWPtJQrgbw7hHVb/BwmIkWR/ZCt4lYOZnlO1iZWPnUC/hk6iRsCh83bLQBcyY+9qtBH9y7Kt7niP4=\",\r\n    \"message\": \"mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ:1644801851:starRegistry\",\r\n    \"star\": {\r\n        \"dec\": \"68° 52' 56.9\",\r\n        \"ra\": \"16h 29m 1.0s\",\r\n        \"story\": \"Testing the story 4\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8000/blocks/:address",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"blocks",
+						":address"
+					],
+					"variable": [
+						{
+							"key": "address",
+							"value": "mphoKgGeWBFo9HjyVduTXzk9pk51ULF6VZ"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

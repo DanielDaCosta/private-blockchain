@@ -73,11 +73,14 @@ class Blockchain {
                 block.previousBlockHash = null
             }
             block.hash = SHA256(JSON.stringify(block)).toString()
-            if (self.chain.push(block)) {
-                resolve(block)
+
+            let validateBlocks = await self.validateChain()
+            if (Array.isArray(validateBlocks)) { // If validate Blocks is an Array of Error, the BlockChain is not valid
+                reject(Error("Blockchain is not valid"))
             }
-            else{
-                reject(Error("Error on creating block"))
+            else {
+                self.chain.push(block)
+                resolve(block)
             }
         });
     }
