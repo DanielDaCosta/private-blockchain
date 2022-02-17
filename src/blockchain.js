@@ -147,7 +147,7 @@ class Blockchain {
     getBlockByHash(hash) {
         let self = this;
         return new Promise((resolve, reject) => {
-           const blocksMatched = self.chain.filter(block => block.hash === hash);
+           const blocksMatched = self.chain.find(block => block.hash === hash);
            if (blocksMatched) {
                resolve(blocksMatched);
            } else {
@@ -207,7 +207,7 @@ class Blockchain {
         let self = this;
         let errorLog = [];
         return new Promise(async (resolve, reject) => {
-            self.chain.forEach(async (block, idx) => {
+            for (let [idx, block] of self.chain.entries()) {
                 let validationBlock = await block.validate()
                 if (idx < self.chain.length - 1) {
                     if (block.hash !== self.chain[idx + 1].previousBlockHash) {
@@ -217,7 +217,7 @@ class Blockchain {
                 if(!validationBlock) {
                     errorLog.push(new Error(`Invalid block #${block.height}`))
                 }
-            })
+            }
             if (errorLog.length){
                 resolve(errorLog)
             } else {
