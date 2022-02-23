@@ -16,5 +16,14 @@
     "express": "^4.16.4",
     "hex2ascii": "0.0.3",
     "morgan": "^1.9.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanielDaCosta/private-blockchain.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DanielDaCosta/private-blockchain/issues"
+  },
+  "homepage": "https://github.com/DanielDaCosta/private-blockchain#readme"
 }
